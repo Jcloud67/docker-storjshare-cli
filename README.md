@@ -2,10 +2,10 @@ The Storj Share Daemon+CLI (https://github.com/Storj/storjshare-daemon).
 
 ## Build ##
 
-This image is built automatically every 8 hours, at 07:15, 15:15 and 23:15 (all times UTC), and whenever anything gets pushed to github. Pull the latest with:
+This image is a dirty fork of the official repo, adding multiple node creation and storjstat.com monitor script.
 
 ```bash
-docker pull oreandawe/storjshare-cli:latest
+docker pull Jcloud67/storjshare-cli:latest
 ```
 
 ## Local Build ##
@@ -14,8 +14,8 @@ Alternatively, build the container locally:
 
 ```bash
 cd /path/to/your/buildarea
-git clone https://github.com/zannen/docker-storjshare-cli
-docker build -t oreandawe/storjshare-cli:latest docker-storjshare-cli/
+git clone https://github.com/Jcloud67/docker-storjshare-cli
+docker build -t Jcloud67/storjshare-cli:latest docker-storjshare-cli/
 ```
 
 ## Run Daemon ##
@@ -33,8 +33,10 @@ docker run --detach \
 	[-e DATADIR=/storj] \
 	[-e SHARE_SIZE=1TB] \
 	[-e RPCADDRESS=0.0.0.0] \
+	[-e MONITORKEY= ] \
+	[-e NODE_COUNT=0 ] \
 	[-e USE_HOSTNAME_SUFFIX=FALSE] \
-    oreandawe/storjshare-cli:latest
+     Jcloud67/storjshare-cli:latest
 ```
 
 ## Status ##
@@ -54,6 +56,24 @@ The output should look something like this:
 │ abcdefabcdefabcdefabcdefabcdefabcdefabcd    │ running │ 4d 22h … │ 0        │ 243     │ 30            │ 20ms    │ 1234     │ 15.00MB   │ connected    │
 │   → /storj/share                            │         │          │          │         │ 15 received   │         │ (Tunnel) │ (1%)      │              │
 └─────────────────────────────────────────────┴─────────┴──────────┴──────────┴─────────┴───────────────┴─────────┴──────────┴───────────┴──────────────┘
+```
+
+## StorjMonitor ##
+Storjstat.com monitor script is pre-installed, the API-Key can be given at time of container creation using ENV variable MONITORKEY.
+API key can be added after creation of the Container using the following commands: (interactively)
+
+```bash
+docker exec -ti mystorjdaemon /bin/sh
+sed -i "s/YOUR-TOKEN-HERE/MONITOR_KEY/" /StorjMonitor/storjMonitor.js
+exit
+```
+Running the monitor script is the following commands: (interactively)
+```bash
+docker exec -ti mystorjdaemon /bin/sh
+cd /StorjMonitor
+nohup ./storjMonitor.sh
+./storjMonitor.sh daemon -F &
+exit
 ```
 
 ## Stop Daemon ##
