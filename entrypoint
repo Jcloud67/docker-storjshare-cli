@@ -30,10 +30,10 @@ fi;
 i=1;
 j=4000;
 while [ "$i" -le "${NODE_COUNT}" ]; do
-         mkdir -pv "${DATADIR}/Node_$i/share" "${DATADIR}/Node_$i/log";
-         if [ ! -f "${DATADIR}/Node_$i/config.json" ]; then
+         mkdir -pv "${DATADIR}/${NODE_DIR}$i/share" "${DATADIR}/${NODE_DIR}$i/log";
+         if [ ! -f "${DATADIR}/${NODE_DIR}$i/config.json" ]; then
              j=$(( j + 1 ));
-             storjshare create --storj "${WALLET_ADDRESS}" --storage "${DATADIR}/Node_$i/share" --size "${SHARE_SIZE}" --rpcport "$j" --rpcaddress "${RPCADDRESS}"  --logdir "${DATADIR}/Node_$i/log" --outfile "${DATADIR}/Node_$i/config.json" --noedit;
+             storjshare create --storj "${WALLET_ADDRESS}" --storage "${DATADIR}/${NODE_DIR}$i/share" --size "${SHARE_SIZE}" --rpcport "$j" --rpcaddress "${RPCADDRESS}"  --logdir "${DATADIR}/${NODE_DIR}$i/log" --outfile "${DATADIR}/${NODE_DIR}$i/config.json" --noedit;
          fi;
       i=$(( i + 1 ));
 done;
@@ -42,8 +42,11 @@ storjshare start --config "${DATADIR}/config.json";
 
 i=1;
 while [ "$i" -le "${NODE_COUNT}" ]; do
-storjshare start --config "${DATADIR}/Node_$i/config.json";
+storjshare start --config "${DATADIR}/${NODE_DIR}$i/config.json";
       i=$(( i + 1 ));
 done;
+
+cd /StorjMonitor;
+(/StorjMonitor/storjMonitor.sh &) &
 
 wait;
