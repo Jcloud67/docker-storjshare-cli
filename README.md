@@ -5,7 +5,7 @@ The Storj Share Daemon+CLI (https://github.com/Storj/storjshare-daemon).
 This image is a dirty fork of the official repo, adding multiple node creation and storjstat.com monitor script.
 
 ```bash
-docker pull Jcloud67/storjshare-cli:latest
+docker pull zugz/r8mystorj:latest
 ```
 
 ## Local Build ##
