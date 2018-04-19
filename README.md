@@ -67,14 +67,7 @@ docker exec -ti mystorjdaemon /bin/sh
 sed -i "s/YOUR-TOKEN-HERE/MONITOR_KEY/" /StorjMonitor/storjMonitor.js
 exit
 ```
-Running the monitor script is the following commands: (interactively)
-```bash
-docker exec -ti mystorjdaemon /bin/sh
-cd /StorjMonitor
-nohup ./storjMonitor.sh
-./storjMonitor.sh daemon -F &
-exit
-```
+
 
 ## Stop Daemon ##
 
