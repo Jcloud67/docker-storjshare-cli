@@ -35,6 +35,7 @@ docker run --detach \
 	[-e RPCADDRESS=0.0.0.0] \
 	[-e MONITORKEY= ] \
 	[-e NODE_COUNT=0 ] \
+	[-e NODE_DIR=Node_ ] \
 	[-e USE_HOSTNAME_SUFFIX=FALSE] \
      Jcloud67/storjshare-cli:latest
 ```
