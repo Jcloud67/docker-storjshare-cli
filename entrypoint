@@ -31,7 +31,12 @@ fi;
 
 storjshare start --config "${DATADIR}/config.json";
 
+#PURGE LOGS - COMMUNITY REQUEST, single node
+if [ "$(echo "${DEL_LOGS}")" == 'TRUE' ]; then
+   find "${DATADIR}/log" -type f -mtime +"${DEL_LOGS_DAYS}" -iname "*.log" -delete &
+fi;
 
+## MULTIPLE NODE SUPPORT - COMMUNITY REQUEST
 if [ -n "${NODE_COUNT}" ]; then
   i=1;
   j=4000;
@@ -40,6 +45,12 @@ if [ -n "${NODE_COUNT}" ]; then
          if [ ! -f "${DATADIR}/${NODE_DIR}$i/config.json" ]; then
              j=$(( j + 1 ));
              storjshare create --storj "${WALLET_ADDRESS}" --storage "${DATADIR}/${NODE_DIR}$i/share" --size "${SHARE_SIZE}" --rpcport "$j" --rpcaddress "${RPCADDRESS}"  --logdir "${DATADIR}/${NODE_DIR}$i/log" --outfile "${DATADIR}/${NODE_DIR}$i/config.json" --noedit;
+	 else
+            #PURGE LOGS - COMMUNITY REQUEST
+             if [ "$(echo "${DEL_LOGS}")" == 'TRUE' ]; then
+                find "${DATADIR}/${NODE_DIR}$i/log" -type f -mtime +"${DEL_LOGS_DAYS}" -iname "*.log" -delete &
+                echo "Delete TRUE";
+             fi;
          fi;
       i=$(( i + 1 ));
   done;
@@ -50,7 +61,7 @@ if [ -n "${NODE_COUNT}" ]; then
         i=$(( i + 1 ));
   done;
 fi;
-
+## END OF MULTIPLE NODE MOD
 
 if [ -n "${STORJ_MONITOR_API_KEY}" ]; then
     sleep 10;
