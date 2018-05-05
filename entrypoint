@@ -44,7 +44,7 @@ if [ -n "${NODE_COUNT}" ]; then
          mkdir -pv "${DATADIR}/${NODE_DIR}$i/share" "${DATADIR}/${NODE_DIR}$i/log";
          if [ ! -f "${DATADIR}/${NODE_DIR}$i/config.json" ]; then
              j=$(( j + 1 ));
-             storjshare create --storj "${WALLET_ADDRESS}" --storage "${DATADIR}/${NODE_DIR}$i/share" --size "${SHARE_SIZE}" --rpcport "$j" --rpcaddress "${RPCADDRESS}"  --logdir "${DATADIR}/${NODE_DIR}$i/log" --outfile "${DATADIR}/${NODE_DIR}$i/config.json" --noedit;
+             storjshare create --storj "${WALLET_ADDRESS}" --storage "${DATADIR}/${NODE_DIR}$i/share" --size "${SHARE_SIZE}" --rpcport "$j" --rpcaddress "${RPCADDRESS}" --manualforwarding --logdir "${DATADIR}/${NODE_DIR}$i/log" --outfile "${DATADIR}/${NODE_DIR}$i/config.json" --noedit;
 	 else
             #PURGE LOGS - COMMUNITY REQUEST
              if [ "$(echo "${DEL_LOGS}")" == 'TRUE' ]; then
