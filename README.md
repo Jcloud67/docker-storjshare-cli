@@ -43,6 +43,29 @@ docker run --detach \
      Jcloud67/storjshare-cli:latest
 ```
 
+For Copy/Paste purposes: 
+
+```bash
+docker run --detach \
+    --name mystorjdaemon \
+    --restart=always \
+    -v /path/to/storjdata:/storj \
+    -p 4000-4003:4000-4003 \
+	-e WALLET_ADDRESS=your_ERC20_wallet_address \
+	[-e DAEMONADDRESS=127.0.0.1] \
+	[-e DATADIR=/storj] \
+	[-e SHARE_SIZE=1TB] \
+	[-e RPCADDRESS=0.0.0.0] \
+	[-e MONITORKEY= ] \
+	[-e NODE_COUNT=0 ] \
+	[-e NODE_DIR=Node_ ] \
+	[-e USE_HOSTNAME_SUFFIX=FALSE] \
+	[-e DEL_LOGS_DAYS=32 ] \
+	[-e DEL_LOGS=FALSE] \
+     Jcloud67/storjshare-cli:latest
+```
+
+
 ## Status ##
 
 Check the status of the daemon by using this command:
