@@ -52,13 +52,8 @@ if [ -n "${NODE_COUNT}" ]; then
                 echo "Delete TRUE";
              fi;
          fi;
+      storjshare start --config "${DATADIR}/${NODE_DIR}$i/config.json";
       i=$(( i + 1 ));
-  done;
-
-  i=1;
-  while [ "$i" -le "${NODE_COUNT}" ]; do
-        storjshare start --config "${DATADIR}/${NODE_DIR}$i/config.json";
-        i=$(( i + 1 ));
   done;
 fi;
 ## END OF MULTIPLE NODE MOD
