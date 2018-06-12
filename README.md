@@ -148,3 +148,5 @@ Or to check proccess running in a container:
 docker exec nameofyourcontainer ps -a
 ```
 
+## And now the punch-line ##
+It's a good thing I didn't tell him about the dirty knife.
