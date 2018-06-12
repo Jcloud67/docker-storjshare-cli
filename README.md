@@ -1,9 +1,10 @@
 The Storj Share Daemon+CLI (https://github.com/Storj/storjshare-daemon).
 
-## Build ##
+## WHAT and WHY ##
 
-This image is a dirty fork of the official repo, adding multiple node creation and storjstat.com monitor script.
+This image is a dirty fork of the official repo, adding multiple node creation and optional deletion of log files.  Storj daemon supports running multiple nodes, up to the number of CPU-threads on your system (hard-limit per container). This fork adds simple logic and variables to build and start multiple minning-nodes in a loop. 
 
+Deletion of the daemon's log files also added by this fork. By default logs are kept untouched, however if the variable DEL_LOGS is set to 'TRUE' then a second variable DEL_LOGS_DAYS=INT (INT >= 1) is used to specify how many days of logs to keep. Log file pruning occurs at the start of the container - no other schedules.
 ```bash
 docker pull zugz/r8mystorj:latest
 ```
@@ -31,12 +32,14 @@ docker run --detach \
 	-e WALLET_ADDRESS=your_ERC20_wallet_address \
 	[-e DAEMONADDRESS=127.0.0.1] \
 	[-e DATADIR=/storj] \
-	[-e SHARE_SIZE=1TB] \
-	[-e RPCADDRESS=0.0.0.0] \
-	[-e MONITORKEY= ] \
-	[-e NODE_COUNT=0 ] \
+	[-e SHARE_SIZE=1TB] \                                     <--  Consider, a LARGE # here with multiple nodes, do you have the                                                                            space? Could also change these values later in each config file.
+	[-e RPCADDRESS=0.0.0.0] \                                 <--  Recomend DynamicDNS used here.
+	[-e MONITORKEY= ] \                                       <--  storjstat.com user API monitor-key here.
+	[-e NODE_COUNT=0 ] \                                      <--  How many additional minning-nodes to start.
 	[-e NODE_DIR=Node_ ] \
 	[-e USE_HOSTNAME_SUFFIX=FALSE] \
+	[-e DEL_LOGS_DAYS=32 ] \                                  <--  Keep this many days; older is deleted. Valid is >=1.
+	[-e DEL_LOGS=FALSE] \                                     <--  DEL_LOGS=TRUE  to enable.
      Jcloud67/storjshare-cli:latest
 ```
 
